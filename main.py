@@ -1,3 +1,5 @@
+L = instaloader.Instaloader()
+L.load_session_from_file(USERNAME)
 import time
 import instaloader
 from instagram_private_api import Client, ClientCompatPatch
