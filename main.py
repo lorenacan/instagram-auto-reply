@@ -1,3 +1,4 @@
+import instaloader
 L = instaloader.Instaloader()
 L.load_session_from_file(USERNAME)
 import time
