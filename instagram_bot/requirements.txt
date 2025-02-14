@@ -1,0 +1,5 @@
+instaloader
+instagram_private_api
+flask
+gunicorn
+
