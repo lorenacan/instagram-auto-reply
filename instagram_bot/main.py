@@ -4,15 +4,23 @@ from instagram_private_api import Client, ClientCompatPatch
 from flask import Flask, request, jsonify, render_template
 import threading
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde un archivo .env
+load_dotenv()
 
 app = Flask(__name__)
 
-# Obtener credenciales desde variables de entorno
-USERNAME = os.getenv("USERNAME")
-PASSWORD = os.getenv("PASSWORD")
+# Obtener credenciales desde variables de entorno con nombres distintos para evitar conflictos
+INSTAGRAM_USERNAME = "revenia.agency"
+INSTAGRAM_PASSWORD = "ArusyLosScoutssonunasecta"
 
-if not USERNAME or not PASSWORD:
-    raise ValueError("Las variables de entorno USERNAME y PASSWORD no están definidas")
+# Imprimir valores de las variables de entorno para depuración
+print(f"INSTAGRAM_USERNAME: {INSTAGRAM_USERNAME}")
+print(f"INSTAGRAM_PASSWORD: {'*' * len(INSTAGRAM_PASSWORD) if INSTAGRAM_PASSWORD else 'No definido'}")
+
+if not INSTAGRAM_USERNAME or not INSTAGRAM_PASSWORD:
+    raise ValueError("Las variables de entorno INSTAGRAM_USERNAME e INSTAGRAM_PASSWORD no están definidas. Asegúrate de configurarlas en un archivo .env o en Render.")
 
 # Mensaje automático
 AUTO_REPLY_MESSAGE = "¡Gracias por tu comentario! Te responderemos pronto. 😊"
@@ -20,14 +28,14 @@ AUTO_REPLY_MESSAGE = "¡Gracias por tu comentario! Te responderemos pronto. 😊
 # Iniciar sesión con cookies para evitar bloqueos
 L = instaloader.Instaloader()
 try:
-    L.load_session_from_file(USERNAME)
+    L.load_session_from_file(INSTAGRAM_USERNAME)
 except FileNotFoundError:
     L.context.log("Iniciando sesión por primera vez...")
-    L.login(USERNAME, PASSWORD)
+    L.login(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD)
     L.save_session_to_file()
 
 try:
-    api = Client(USERNAME, PASSWORD)
+    api = Client(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD)
 except Exception as e:
     print(f"Error al iniciar sesión en Instagram: {e}")
     exit()
