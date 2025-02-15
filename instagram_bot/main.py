@@ -4,23 +4,16 @@ from instagram_private_api import Client, ClientCompatPatch
 from flask import Flask, request, jsonify, render_template
 import threading
 import os
-from dotenv import load_dotenv
-
-# Cargar variables de entorno desde un archivo .env
-load_dotenv()
 
 app = Flask(__name__)
 
-# Obtener credenciales desde variables de entorno con nombres distintos para evitar conflictos
+# Credenciales de Instagram (definidas directamente en el código)
 INSTAGRAM_USERNAME = "revenia.agency"
 INSTAGRAM_PASSWORD = "ArusyLosScoutssonunasecta"
 
-# Imprimir valores de las variables de entorno para depuración
+# Imprimir valores de las credenciales para depuración (ocultando la contraseña)
 print(f"INSTAGRAM_USERNAME: {INSTAGRAM_USERNAME}")
-print(f"INSTAGRAM_PASSWORD: {'*' * len(INSTAGRAM_PASSWORD) if INSTAGRAM_PASSWORD else 'No definido'}")
-
-if not INSTAGRAM_USERNAME or not INSTAGRAM_PASSWORD:
-    raise ValueError("Las variables de entorno INSTAGRAM_USERNAME e INSTAGRAM_PASSWORD no están definidas. Asegúrate de configurarlas en un archivo .env o en Render.")
+print("INSTAGRAM_PASSWORD: ********")
 
 # Mensaje automático
 AUTO_REPLY_MESSAGE = "¡Gracias por tu comentario! Te responderemos pronto. 😊"
